@@ -1,0 +1,71 @@
+### ner
+POST http://localhost:8000/ner
+Content-Type: application/json
+
+{
+"texts": ["曹操和司马懿去赶集，中途遇上关羽，一起吃了个饭。"]
+}
+
+### pos
+POST http://localhost:8000/pos
+Content-Type: application/json
+
+{
+"texts": ["南京市长江大桥"]
+}
+
+### add_words
+POST http://localhost:8000/add_words
+Content-Type: application/json
+
+{
+  "words": ["江大桥"]
+}
+
+### seg
+POST http://localhost:8000/seg
+Content-Type: application/json
+
+{
+  "texts": ["曹操和司马懿去赶集，中途遇上关羽，一起吃了个饭。"]
+}
+
+### sent_split
+POST http://localhost:8000/sent_split
+Content-Type: application/json
+
+{
+  "texts": ["曹操和司马懿去赶集，中途遇上关羽，一起吃了个饭。"]
+}
+
+### srl
+POST http://localhost:8000/srl
+Content-Type: application/json
+
+{
+  "texts": ["曹操和司马懿去赶集，中途遇上关羽，一起吃了个饭。"]
+}
+
+### dep
+POST http://localhost:8000/dep
+Content-Type: application/json
+
+{
+  "texts": ["曹操和司马懿去赶集，中途遇上关羽，一起吃了个饭。"]
+}
+
+### sdp
+POST http://localhost:8000/sdp
+Content-Type: application/json
+
+{
+  "texts": ["曹操和司马懿去赶集，中途遇上关羽，一起吃了个饭。"]
+}
+
+### sdpg
+POST http://localhost:8000/sdpg
+Content-Type: application/json
+
+{
+  "texts": ["曹操和司马懿去赶集，中途遇上关羽，一起吃了个饭。"]
+}
