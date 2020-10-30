@@ -1,11 +1,18 @@
 # -*- coding: utf-8 -*-
-from typing import List
+import os
+from typing import List, Union
 
 from fastapi import FastAPI
 from pydantic import BaseModel
 import uvicorn
 from ltp import LTP
 from fire import Fire
+import yaml
+
+CONFIG_PATH = "config.yml"
+
+with open(os.path.join(os.path.dirname(__file__), CONFIG_PATH)) as file:
+    config = yaml.safe_load(file.read())
 
 
 class Item(BaseModel):
@@ -26,7 +33,7 @@ class Server:
         self._init()
 
     def _init(self):
-        @self._app.post("/sent_split")
+        @self._app.post(config["route_path"]["sent_split"])
         def sent_split(item: Item):  # 分句
             ret = {
                 'texts': item.texts,
@@ -40,7 +47,7 @@ class Server:
                 ret['status'] = 1
             return ret
 
-        @self._app.post("/add_words")
+        @self._app.post(config["route_path"]["add_words"])
         def add_words(words: Words):  # 增加自定义词语
             ret = {
                 'status': 0
@@ -51,7 +58,7 @@ class Server:
                 ret['status'] = 1
             return ret
 
-        @self._app.post("/seg")
+        @self._app.post(config["route_path"]["seg"])
         def seg(item: Item):  # 分词
             ret = {
                 'status': 0,
@@ -65,7 +72,7 @@ class Server:
                 ret['status'] = 1
             return ret
 
-        @self._app.post("/pos")
+        @self._app.post(config["route_path"]["pos"])
         def pos(item: Item):  # 词性标注
             ret = {
                 'status': 0,
@@ -82,7 +89,7 @@ class Server:
                 ret['status'] = 1
             return ret
 
-        @self._app.post("/ner")
+        @self._app.post(config["route_path"]["ner"])
         def ner(item: Item):  # 命名实体识别
             ret = {
                 'status': 0,
@@ -99,7 +106,7 @@ class Server:
                 ret['status'] = 1
             return ret
 
-        @self._app.post("/srl")
+        @self._app.post(config["route_path"]["srl"])
         def srl(item: Item):  # 语义角色标注
             ret = {
                 'status': 0,
@@ -116,7 +123,7 @@ class Server:
                 ret['status'] = 1
             return ret
 
-        @self._app.post("/dep")
+        @self._app.post(config["route_path"]["dep"])
         def dep(item: Item):  # 依存句法分析
             ret = {
                 'status': 0,
@@ -133,7 +140,7 @@ class Server:
                 ret['status'] = 1
             return ret
 
-        @self._app.post("/sdp")
+        @self._app.post(config["route_path"]["sdp"])
         def sdp(item: Item):  # 语义依存分析（树）
             ret = {
                 'status': 0,
@@ -150,7 +157,7 @@ class Server:
                 ret['status'] = 1
             return ret
 
-        @self._app.post("/sdpg")
+        @self._app.post(config["route_path"]["sdpg"])
         def sdpg(item: Item):  # 语义依存分析（图）
             ret = {
                 'status': 0,
@@ -167,11 +174,12 @@ class Server:
                 ret['status'] = 1
             return ret
 
-    def run(self, host: str = "127.0.0.1", port: int = 8000):
+    def run(self, host: str = config["default_host"], port: Union[int, str] = config["default_port"]):
         uvicorn.run(self._app, host=host, port=port)
 
 
-def run_server(model_path: str, dict_path: str = None, max_window: int = 4, host: str = "127.0.0.1", port: int = 8000):
+def run_server(model_path: str, dict_path: str = None, max_window: int = int(config["default_max_window"]),
+               host: str = config["default_host"], port: Union[int, str] = config["default_port"]):
     Server(model_path, dict_path=dict_path, max_window=max_window).run(host=host, port=port)
 
 

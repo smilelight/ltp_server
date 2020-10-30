@@ -1,0 +1,13 @@
+route_path:
+  sent_split: /sent_split
+  add_words: /add_words
+  seg: /seg
+  pos: /pos
+  ner: /ner
+  srl: /srl
+  dep: /dep
+  sdp: /sdp
+  sdpg: /sdpg
+default_host: "127.0.0.1"
+default_port: 8000
+default_max_window: 4

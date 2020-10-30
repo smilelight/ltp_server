@@ -3,7 +3,7 @@ POST http://localhost:8000/ner
 Content-Type: application/json
 
 {
-"texts": ["曹操和司马懿去赶集，中途遇上关羽，一起吃了个饭。"]
+"texts": ["乔丹是一位出生在纽约的美国职业篮球运动员。"]
 }
 
 ### pos
@@ -43,7 +43,7 @@ POST http://localhost:8000/srl
 Content-Type: application/json
 
 {
-  "texts": ["曹操和司马懿去赶集，中途遇上关羽，一起吃了个饭。"]
+  "texts": ["乔丹是一位出生在纽约的美国职业篮球运动员。"]
 }
 
 ### dep
@@ -51,7 +51,7 @@ POST http://localhost:8000/dep
 Content-Type: application/json
 
 {
-  "texts": ["曹操和司马懿去赶集，中途遇上关羽，一起吃了个饭。"]
+  "texts": ["乔丹是一位出生在纽约的美国职业篮球运动员。"]
 }
 
 ### sdp

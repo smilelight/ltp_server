@@ -3,3 +3,5 @@ uvicorn
 ltp
 pydantic
 fire
+httpx
+PyYAML

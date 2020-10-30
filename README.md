@@ -7,9 +7,13 @@
 pip install ltp_server
 ```
 
-## 使用方式
 
-### 方式一：Python库引用
+
+## 服务端
+
+### 使用方式
+
+#### 方式一：Python库引用
 
 示例：
 
@@ -22,7 +26,7 @@ if __name__ == '__main__':
     Server(model_path).run()
 ```
 
-### 方式二：shell命令
+#### 方式二：shell命令
 
 示例：
 
@@ -30,7 +34,7 @@ if __name__ == '__main__':
 ltp_server --model_path=/root/Data/NLP/Model/LTP
 ```
 
-## 可用选项
+### 可用选项
 
 | 参数名     | 是否可选 | 默认值    | 说明                     |
 | ---------- | -------- | --------- | ------------------------ |
@@ -40,7 +44,7 @@ ltp_server --model_path=/root/Data/NLP/Model/LTP
 | host       | 是       | 127.0.0.1 | 服务主机名               |
 | port       | 是       | 8000      | 服务监听端口             |
 
-## 服务概览
+### 服务概览
 
 | 服务功能           | 服务路由    | 请求方式 |
 | ------------------ | ----------- | -------- |
@@ -54,9 +58,9 @@ ltp_server --model_path=/root/Data/NLP/Model/LTP
 | 语义依存分析（树） | sdp         | POST     |
 | 语义依存分析（图） | sdpg        | POST     |
 
-## 请求示例
+### 请求示例
 
-### 分句
+#### 分句
 
 ```bash
 ### sent_split
@@ -82,7 +86,7 @@ Content-Type: application/json
 }
 ```
 
-### 增加自定义词语
+#### 增加自定义词语
 
 ```bash
 ### add_words
@@ -104,7 +108,7 @@ Content-Type: application/json
 }
 ```
 
-### 分词
+#### 分词
 
 ```bash
 ### seg
@@ -150,7 +154,7 @@ Content-Type: application/json
 }
 ```
 
-### 命名实体识别
+#### 命名实体识别
 
 ```bash
 ### ner
@@ -215,7 +219,7 @@ Content-Type: application/json
 }
 ```
 
-### 语义角色标注
+#### 语义角色标注
 
 ```bash
 ### srl
@@ -331,7 +335,7 @@ Content-Type: application/json
 }
 ```
 
-### 依存句法分析
+#### 依存句法分析
 
 ```bash
 ### dep
@@ -466,7 +470,7 @@ Content-Type: application/json
 }
 ```
 
-### 语义依存分析（树）
+#### 语义依存分析（树）
 
 ```bash
 ### sdp
@@ -606,7 +610,7 @@ Content-Type: application/json
 }
 ```
 
-### 语义依存分析（图）
+#### 语义依存分析（图）
 
 ```bash
 ### sdpg
@@ -746,7 +750,47 @@ Content-Type: application/json
 }
 ```
 
+## 客户端
 
+### 使用方式
+
+#### 方式一：Python库使用
+
+示例如下：
+
+```python
+from ltp_server import Client
+
+if __name__ == '__main__':
+    client = Client()
+    texts = ["乔丹是一位出生在纽约的美国职业篮球运动员。"]
+
+    print(client.sent_split(texts))
+    print(client.seg(texts))
+    print(client.pos(texts))
+    print(client.ner(texts))
+    print(client.srl(texts))
+    print(client.dep(texts))
+    print(client.sdp(texts))
+    print(client.sdpg(texts))
+```
+
+请求结果：
+
+```json
+{'texts': ['乔丹是一位出生在纽约的美国职业篮球运动员。'], 'sents': ['乔丹是一位出生在纽约的美国职业篮球运动员。'], 'status': 0}
+{'status': 0, 'texts': ['乔丹是一位出生在纽约的美国职业篮球运动员。'], 'seg': [['乔丹', '是', '一', '位', '出生', '在', '纽约', '的', '美国', '职业', '篮球', '运动员', '。']]}
+{'status': 0, 'texts': ['乔丹是一位出生在纽约的美国职业篮球运动员。'], 'seg': [['乔丹', '是', '一', '位', '出生', '在', '纽约', '的', '美国', '职业', '篮球', '运动员', '。']], 'pos': [['nh', 'v', 'm', 'q', 'v', 'p', 'ns', 'u', 'ns', 'n', 'n', 'n', 'wp']]}
+{'status': 0, 'texts': ['乔丹是一位出生在纽约的美国职业篮球运动员。'], 'seg': [['乔丹', '是', '一', '位', '出生', '在', '纽约', '的', '美国', '职业', '篮球', '运动员', '。']], 'ner': [[['Nh', 0, 0], ['Ns', 6, 6], ['Ns', 8, 8]]]}
+{'status': 0, 'texts': ['乔丹是一位出生在纽约的美国职业篮球运动员。'], 'seg': [['乔丹', '是', '一', '位', '出生', '在', '纽约', '的', '美国', '职业', '篮球', '运动员', '。']], 'srl': [[[], [['A0', 0, 0], ['A1', 2, 11]], [], [], [['A1', 5, 6], ['A0', 9, 11]], [], [], [], [], [], [], [], []]]}
+{'status': 0, 'texts': ['乔丹是一位出生在纽约的美国职业篮球运动员。'], 'seg': [['乔丹', '是', '一', '位', '出生', '在', '纽约', '的', '美国', '职业', '篮球', '运动员', '。']], 'dep': [[[1, 2, 'SBV'], [2, 0, 'HED'], [3, 4, 'ATT'], [4, 12, 'ATT'], [5, 12, 'ATT'], [6, 5, 'CMP'], [7, 6, 'POB'], [8, 5, 'RAD'], [9, 12, 'ATT'], [10, 12, 'ATT'], [11, 12, 'ATT'], [12, 2, 'VOB'], [13, 2, 'WP']]]}
+{'status': 0, 'texts': ['乔丹是一位出生在纽约的美国职业篮球运动员。'], 'seg': [['乔丹', '是', '一', '位', '出生', '在', '纽约', '的', '美国', '职业', '篮球', '运动员', '。']], 'sdp': [[[1, 2, 'EXP'], [2, 0, 'Root'], [3, 4, 'MEAS'], [4, 12, 'MEAS'], [5, 12, 'rEXP'], [6, 7, 'mRELA'], [7, 5, 'LOC'], [8, 5, 'mDEPD'], [9, 12, 'FEAT'], [10, 11, 'FEAT'], [10, 12, 'FEAT'], [11, 12, 'FEAT'], [12, 2, 'LINK'], [13, 2, 'mPUNC']]]}
+{'status': 0, 'texts': ['乔丹是一位出生在纽约的美国职业篮球运动员。'], 'seg': [['乔丹', '是', '一', '位', '出生', '在', '纽约', '的', '美国', '职业', '篮球', '运动员', '。']], 'sdpg': [[[1, 2, 'EXP'], [2, 0, 'Root'], [3, 4, 'MEAS'], [4, 12, 'MEAS'], [5, 12, 'rEXP'], [6, 7, 'mRELA'], [7, 5, 'LOC'], [8, 5, 'mDEPD'], [9, 12, 'FEAT'], [10, 11, 'FEAT'], [10, 12, 'FEAT'], [11, 12, 'FEAT'], [12, 2, 'LINK'], [13, 2, 'mPUNC']]]}
+```
+
+#### 方式二：自己通过http请求调用
+
+略
 
 ## 参考
 
